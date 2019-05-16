@@ -1,0 +1,15 @@
+python -u model.py --conv1_size=5 \
+                          --conv1_out=32 \
+                          --conv1_activation='relu' \
+                          --pool1_size=2 \
+                          --conv2_size=5 \
+                          --conv2_out=64 \
+                          --conv2_activation='relu' \
+                          --pool2_size=2 \
+                          --dropout=0.2 \
+                          --fc1_size=1024 \
+                          --fc1_activation='sigmoid' \
+                          --optimizer='adam' \
+                          --log_learning_rate=-3\
+                          --batch_size=100 \
+                          --epochs=1

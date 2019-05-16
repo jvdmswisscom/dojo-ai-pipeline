@@ -1,0 +1,36 @@
+---
+version: 1
+
+kind: experiment
+
+framework: pytorch
+environment:
+  replicas:
+    n_workers: 8
+
+declarations:
+  batch_size_train: 128
+  batch_size_test: 1000
+  epochs: 5
+  lr: 0.01
+  train_steps: 400
+  momentum: 0.5
+
+build:
+  image: pytorch/pytorch:0.4.1-cuda9-cudnn7-devel
+  build_steps:
+   - rm -rf /opt/conda/pkgs/pyyaml-3.13*
+   - rm -rf /opt/conda/conda-meta/pyyaml-3.13*
+   - rm -rf /opt/conda/lib/python3.6/site-packages/PyYAML-3.13*
+   - pip install -U pip
+   - pip install -U cython
+   - pip install -U pyyaml
+   - pip install --no-cache-dir -U polyaxon-helper
+
+run:
+  cmd: python distributed_run.py --batch-size={{ batch_size_train }} \
+                                 --test-batch-size={{ batch_size_test }} \
+                                 --epochs={{ epochs }} \
+                                 --lr={{ lr }} \
+                                 --momentum={{ momentum }} \
+                                 --epochs={{ epochs }}
